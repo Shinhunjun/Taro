@@ -1,3 +1,4 @@
+import streamlit as st  # 반드시 최상단에 st를 먼저 import해야 합니다.
 import pathlib, shutil
 from bs4 import BeautifulSoup
 
@@ -7,27 +8,30 @@ from bs4 import BeautifulSoup
 try:
     # Streamlit의 정적 index.html 파일 경로 (예시)
     index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
-    # index.html 파일이 존재하는지 확인
     if index_path.exists():
         # 파일 읽기 및 파싱
         soup = BeautifulSoup(index_path.read_text(), features="html.parser")
-        # 검증용 meta 태그 (AdSense 검증에 필요한 경우)
+        # 검증용 meta 태그 (실제 AdSense에서 제공받은 값을 사용)
         verification_code = """
         <meta name="google-adsense-account" content="ca-pub-6885920070996702">
         """
-        # 이미 삽입되어 있는지 확인 후, 없으면 추가
-        if not soup.find("meta", attrs={"name": "google-site-verification"}):
+        # 이미 삽입되어 있는지 확인 (여기서는 'google-adsense-account' 속성으로 확인)
+        if not soup.find("meta", attrs={"name": "google-adsense-account"}):
             new_html = str(soup).replace("<head>", "<head>\n" + verification_code)
             index_path.write_text(new_html)
             print("검증용 meta 태그가 index.html에 삽입되었습니다.")
+        else:
+            print("검증용 meta 태그가 이미 존재합니다.")
     else:
         print("index.html 파일을 찾을 수 없습니다.")
 except Exception as e:
     print(f"검증 코드 삽입 중 오류 발생: {e}")
 
+# ============================
+# 2. 나머지 앱 코드 시작
+# ============================
 import json
 import random
-import streamlit as st
 from PIL import Image
 import os
 import requests
@@ -82,7 +86,7 @@ components.html("""
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-""", height=100)  # 높이 조정 가능
+""", height=100)
 st.markdown("---")
 
 # User question input
@@ -137,7 +141,7 @@ def select_card(position):
 st.markdown("## 🃏 타로 카드 선택")
 
 # 광고 배치
-cols_ad = st.columns([1, 2, 1])  # 중앙 열에 광고 배치
+cols_ad = st.columns([1, 2, 1])
 with cols_ad[1]:
     components.html("""
      <ins class="adsbygoogle"
@@ -151,11 +155,9 @@ with cols_ad[1]:
      </script>
     """, height=250)
     
-# Show warning if no question is entered
 if not user_question:
     st.warning("❗ 질문을 입력해야 타로 카드를 뽑을 수 있습니다.")
 
-# Card selection buttons and images
 cols = st.columns(3)
 positions = ['과거', '현재', '미래']
 session_keys = ['past_card', 'present_card', 'future_card']
@@ -167,25 +169,21 @@ for i, col in enumerate(cols):
         if st.session_state[session_keys[i]]:
             st.image(os.path.join(cards_folder, st.session_state[session_keys[i]]["img"]), width=150)
 
-# Display card interpretation results
 if all(st.session_state[key] for key in session_keys) and user_question:
     st.markdown("### ✨ 타로 카드 해석")
 
     with st.spinner('🔮 타로 카드를 해석 중입니다... 잠시만 기다려주세요...'):
-        # Progress bar
         progress_bar = st.progress(0)
         
-        # Extract meanings
         def get_random_meaning(card):
             meanings = card['meanings'].get('light', []) + card['meanings'].get('shadow', [])
             return random.choice(meanings) if meanings else "의미를 찾을 수 없습니다."
-
+        
         progress_bar.progress(20)
         past_meaning = get_random_meaning(st.session_state['past_card'])
         present_meaning = get_random_meaning(st.session_state['present_card'])
         future_meaning = get_random_meaning(st.session_state['future_card'])
         
-        # Optimize prompt
         optimized_prompt = f"""
         [사용자 질문] {user_question}
 
@@ -201,16 +199,13 @@ if all(st.session_state[key] for key in session_keys) and user_question:
         - 신비로운 표현 최소화
         """
         
-        # Update progress bar
         progress_bar.progress(40)
         for percent in range(40, 61, 2):
             progress_bar.progress(percent)
             time.sleep(0.03)
         
-        # Call API
         response = get_deepseek_response(optimized_prompt)
         
-        # Update progress bar
         for percent in range(60, 81, 2):
             progress_bar.progress(percent)
             time.sleep(0.04)
@@ -221,7 +216,6 @@ if all(st.session_state[key] for key in session_keys) and user_question:
                 time.sleep(0.05)
             st.success(response)
             
-                    # 해석 결과 하단 광고
             st.markdown("---")
             components.html("""
                  <ins class="adsbygoogle"
@@ -241,7 +235,6 @@ if all(st.session_state[key] for key in session_keys) and user_question:
 
     progress_bar.empty()
     
-# 🚨 필수 공지사항 추가
 st.markdown("""
 <div style="text-align:center; font-size:0.8em; color:#666; margin-top:50px;">
     <p>본 서비스는 Google 애드센스를 통해 광고를 제공합니다</p>
