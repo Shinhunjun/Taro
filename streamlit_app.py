@@ -1,3 +1,30 @@
+import pathlib, shutil
+from bs4 import BeautifulSoup
+
+# ============================
+# 1. 검증용 meta 태그 삽입 코드 (앱 최상단에 배치)
+# ============================
+try:
+    # Streamlit의 정적 index.html 파일 경로 (예시)
+    index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+    # index.html 파일이 존재하는지 확인
+    if index_path.exists():
+        # 파일 읽기 및 파싱
+        soup = BeautifulSoup(index_path.read_text(), features="html.parser")
+        # 검증용 meta 태그 (AdSense 검증에 필요한 경우)
+        verification_code = """
+        <meta name="google-adsense-account" content="ca-pub-6885920070996702">
+        """
+        # 이미 삽입되어 있는지 확인 후, 없으면 추가
+        if not soup.find("meta", attrs={"name": "google-site-verification"}):
+            new_html = str(soup).replace("<head>", "<head>\n" + verification_code)
+            index_path.write_text(new_html)
+            print("검증용 meta 태그가 index.html에 삽입되었습니다.")
+    else:
+        print("index.html 파일을 찾을 수 없습니다.")
+except Exception as e:
+    print(f"검증 코드 삽입 중 오류 발생: {e}")
+
 import json
 import random
 import streamlit as st
