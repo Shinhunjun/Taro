@@ -72,7 +72,7 @@ tarot_cards = tarot_data["cards"]
 # Streamlit UI
 st.markdown("""
     <h1 style='text-align:center; font-size:2.5em; color:#4B0082; font-family:fantasy; 
-    text-shadow: 1px 1px 3px #000000;'>🔮 당신의 여정은 어디로 향하고 있나요?</h1>
+    text-shadow: 1px 1px 3px #000000;'>🔮 운명을 믿나..?</h1>
 """, unsafe_allow_html=True)
 
 # st.markdown("---")
