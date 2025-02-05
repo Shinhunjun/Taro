@@ -11,16 +11,18 @@ import streamlit.components.v1 as components
 adsense_code = """
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6885920070996702"
      crossorigin="anonymous"></script>
+<!-- taro -->
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-6885920070996702"
-     data-ad-slot="1234567890"
+     data-ad-slot="6283852684"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 """
+
 components.html(adsense_code, height=150)
 
 # Load environment variables
