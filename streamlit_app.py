@@ -69,6 +69,29 @@ with open(json_path, "r") as file:
     tarot_data = json.load(file)
 tarot_cards = tarot_data["cards"]
 
+st.markdown("""
+    <style>
+        /* 기본적인 스타일 (데스크톱) */
+        .custom-header {
+            font-size: 2.5em;
+            text-align: center;
+            color: #4B0082;
+            font-family: fantasy;
+            text-shadow: 1px 1px 3px #000000;
+        }
+        /* 모바일 환경 (화면 너비 600px 이하) */
+        @media only screen and (max-width: 600px) {
+            .custom-header {
+                font-size: 1.8em;
+            }
+            .stTextInput > div {
+                margin: 10px;
+            }
+            /* 필요에 따라 다른 요소들의 스타일도 조절 */
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Streamlit UI
 st.markdown("""
     <h1 style='text-align:center; font-size:2.5em; color:#4B0082; font-family:fantasy; 
