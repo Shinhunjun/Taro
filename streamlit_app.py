@@ -20,8 +20,8 @@ load_dotenv()
 deepseek_api_key = os.getenv("DEEPSEEK_API_KEY")
 
 # Set paths for JSON and images
-json_path = "/Users/hunjunsin/Desktop/Jun/langchain/tarot-images.json"
-cards_folder = "/Users/hunjunsin/Desktop/Jun/langchain/cards"
+json_path = "tarot-images.json"
+cards_folder = "cards"
 
 # Load tarot card data
 with open(json_path, "r") as file:
