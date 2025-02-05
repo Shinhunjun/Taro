@@ -49,7 +49,7 @@ components.html("""
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-6885920070996702"
-     data-ad-slot="1234567890"
+     data-ad-slot="2691483227"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
 <script>
@@ -113,15 +113,15 @@ st.markdown("## 🃏 타로 카드 선택")
 cols_ad = st.columns([1, 2, 1])  # 중앙 열에 광고 배치
 with cols_ad[1]:
     components.html("""
-    <ins class="adsbygoogle"
-         style="display:block; text-align:center;"
-         data-ad-client="ca-pub-6885920070996702"
-         data-ad-slot="0987654321"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+     <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-6885920070996702"
+          data-ad-slot="4004564894"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+     <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+     </script>
     """, height=250)
     
 # Show warning if no question is entered
@@ -197,15 +197,15 @@ if all(st.session_state[key] for key in session_keys) and user_question:
                     # 해석 결과 하단 광고
             st.markdown("---")
             components.html("""
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-6885920070996702"
-                data-ad-slot="5647382910"
-                data-ad-format="rectangle"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+                 <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-6885920070996702"
+                     data-ad-slot="1590763354"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                 <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                 </script>
             """, height=300)
             st.markdown("---")
         else:
